@@ -25,11 +25,13 @@
                     <div class="card mb-4">
                         <a href="#!"><img class="card-img-top" th:src="${club.photoUrl}" alt="..." /></a>
                         <div class="card-body">
-                            <div class="small text-muted" th:rext="${club.createOn}">January 1, 2023</div>
-                            <h2 class="card-title">About this running club</h2>
-                            <p class="card-text" th:text="${club.content}"></p>
-                            <a class="btn btn-primary" th:href="@{/clubs/{id}/delete(id=${club.id})}">Delete</a>
-                            <a class="btn btn-primary" th:href="@{/events/{id}/new(id=${club.id})}">Create Event</a>
+                                <div class="small text-muted" th:rext="${club.createOn}">January 1, 2023</div>
+                                <h2 class="card-title">About this running club</h2>
+                                <p class="card-text" th:text="${club.content}"></p>
+                                <div th:if="${user.id} == ${club.createdBy.id}">
+                                <a class="btn btn-primary" th:href="@{/clubs/{id}/delete(id=${club.id})}">Delete</a>
+                                <a class="btn btn-primary" th:href="@{/events/{id}/new(id=${club.id})}">Create Event</a>
+                                </div>
                         </div>
                     </div>
                     <!-- Nested row for non-featured blog posts-->

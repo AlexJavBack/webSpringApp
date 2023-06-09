@@ -1,5 +1,6 @@
 package com.runmag.web.dto;
 
+import com.runmag.web.models.User;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,5 +26,5 @@ public class ClubDto {
     private LocalDateTime createOn;
     private LocalDateTime updateOn;
     private List<EventDto> events;
-
+    private User createdBy;
 }

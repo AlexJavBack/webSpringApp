@@ -31,6 +31,9 @@ public class Club {
     private LocalDateTime createOn;
     @UpdateTimestamp
     private LocalDateTime updateOn;
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false) // error have/ i can't understand it logic
+    private User createdBy;
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.REMOVE)
     private List<Event> events = new ArrayList<>();

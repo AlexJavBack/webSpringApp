@@ -2,7 +2,10 @@ package com.runmag.web.controller;
 
 import com.runmag.web.dto.ClubDto;
 import com.runmag.web.models.Club;
+import com.runmag.web.models.User;
+import com.runmag.web.security.SecurityUtil;
 import com.runmag.web.service.ClubService;
+import com.runmag.web.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,21 +18,39 @@ import java.util.List;
 @Controller
 public class ClubController {
     private ClubService clubService;
+    private UserService userService;
     @Autowired
-    public ClubController(ClubService clubService) {
+    public ClubController(ClubService clubService, UserService userService) {
         this.clubService = clubService;
+        this.userService = userService;
     }
 
     @GetMapping("/clubs")
     public String listClubs(Model model){
+        User user = new User();
         List<ClubDto> clubs = clubService.findAllClubs();
+        String userName = SecurityUtil.getSessionUser();
+        if(userName != null){
+            user = userService.findByUserName(userName);
+            model.addAttribute("user", user);
+
+        }
+        model.addAttribute("user", user);
         model.addAttribute("clubs", clubs);
         return "clubs-list";
     }
 
     @GetMapping("/clubs/{id}")
     public String clubDetail(@PathVariable("id") long id, Model model){
+        User user = new User();
         ClubDto clubDto = clubService.findClubById(id);
+        String userName = SecurityUtil.getSessionUser();
+        if(userName != null){
+            user = userService.findByUserName(userName);
+            model.addAttribute("user", user);
+
+        }
+        model.addAttribute("user", user);
         model.addAttribute("club", clubDto);
         return "clubs-detail";
     }
